@@ -1,0 +1,13 @@
+[package]
+name = "linux-device-driver"
+version = "0.1.0"
+authors = ["Li Zhuohua <lizhuohua1994@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+# failure = { version = "0.1.3", features = [] }
+# libc = { version = "0.2.43", default-features = false }
+# spin = "0.4.9"
+[build-dependencies]
+cc = "1.0.25"
+shlex = "0.1.1"
