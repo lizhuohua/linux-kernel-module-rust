@@ -11,3 +11,9 @@ edition = "2018"
 [build-dependencies]
 cc = "1.0.25"
 shlex = "0.1.1"
+
+[profile.release]
+panic="abort"
+
+[profile.dev]
+panic="abort"

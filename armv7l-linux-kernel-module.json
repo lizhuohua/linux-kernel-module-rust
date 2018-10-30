@@ -1,0 +1,14 @@
+{
+    "arch": "arm",
+    "data-layout": "e-m:e-p:32:32-i64:64-v128:64:128-a:0:32-n32-S64",
+    "llvm-target": "arm-unknown-linux-eabi",
+    "os": "none",
+    "linker-flavor": "gcc",
+    "code-model": "kernel",
+    "target-c-int-width": "32",
+    "target-endian": "little",
+    "target-pointer-width": "32",
+    "panic-strategy": "abort",
+    "features": "+v7"
+}
+

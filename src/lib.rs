@@ -1,9 +1,9 @@
 #![no_std]
 #![feature(lang_items, allocator_api)]
 
+pub mod allocator;
 pub mod c_types;
 pub mod kernel;
-pub mod allocator;
 pub mod kernel_module;
 pub mod kernel_result;
 pub mod printk;
@@ -21,3 +21,9 @@ use core::panic::PanicInfo;
 fn panic(_info: &PanicInfo) -> ! {
     loop {}
 }
+
+#[lang = "eh_personality"]
+extern "C" fn eh_personality() {}
+
+#[no_mangle]
+pub extern "C" fn __aeabi_unwind_cpp_pr0() {}
