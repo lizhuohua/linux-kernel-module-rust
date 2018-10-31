@@ -31,8 +31,21 @@ $ make
 ```
 
 ## Load and Test
+
+### hello_world
+The simplest kernel module. It just prints "hello" and "goodbye".
 ```bash
-$ sudo insmod helloworld.ko
-$ sudo rmmod helloworld
-$ dmesg
+$ sudo insmod helloworld.ko # load the module
+$ sudo rmmod helloworld # remove the module
+$ dmesg # dump kernel messages
+```
+
+### yes_chardev
+A simple character device which is similar with the `yes` Unix command.
+```bash
+$ sudo insmod yes_chardev.ko
+$ cat /proc/devices # find the major number of the device 'yes', for example, 243
+$ sudo mknod /dev/yes c 243 0 # make a filesystem node (replace 243 with your own major number)
+$ sudo cat /dev/yes # read from the device
+$ sudo rmmod yes_chardev
 ```
