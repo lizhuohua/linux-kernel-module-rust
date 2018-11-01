@@ -1,0 +1,21 @@
+sudo: required
+language: rust
+cache: cargo
+rust: nightly
+install:
+  - sudo apt-get install linux-headers-`uname -r`
+  - cargo install --force cargo-xbuild
+  - rustup component add --toolchain=nightly rust-src
+  - rustup component add rustfmt-preview
+jobs:
+  include:
+    - stage: hello_world
+      before_script: cd hello_world
+      script:
+        - RUST_TARGET_PATH=$(pwd)/.. cargo xbuild --target x86_64-linux-kernel-module
+        - make
+    - stage: yes_chardev
+      before_script: cd yes_chardev
+      script:
+        - RUST_TARGET_PATH=$(pwd)/.. cargo xbuild --target x86_64-linux-kernel-module
+        - make
