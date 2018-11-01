@@ -1,5 +1,5 @@
 # Writing Linux Device Drivers in Rust
-
+[![Build Status](https://travis-ci.com/lizhuohua/linux-device-driver-rust.svg?token=gQ3MGp1DXsVespCpQBDg&branch=master)](https://travis-ci.com/lizhuohua/linux-device-driver-rust)
 ## Requirements
 
 * Rust nightly
