@@ -1,3 +1,6 @@
 target/
 **/*.rs.bk
 Cargo.lock
+kernel-cflags-finder/
+!kernel-cflags-finder/Makefile
+.cache.mk
