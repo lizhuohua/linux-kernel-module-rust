@@ -1,14 +1,35 @@
 {
-    "arch": "arm",
-    "data-layout": "e-m:e-p:32:32-i64:64-v128:64:128-a:0:32-n32-S64",
-    "llvm-target": "arm-unknown-linux-eabi",
-    "os": "none",
-    "linker-flavor": "gcc",
-    "code-model": "kernel",
-    "target-c-int-width": "32",
-    "target-endian": "little",
-    "target-pointer-width": "32",
-    "panic-strategy": "abort",
-    "features": "+v7"
+  "abi-blacklist": [
+    "stdcall",
+    "fastcall",
+    "vectorcall",
+    "thiscall",
+    "win64",
+    "sysv64"
+  ],
+  "arch": "arm",
+  "data-layout": "e-m:e-p:32:32-i64:64-v128:64:128-a:0:32-n32-S64",
+  "env": "gnu",
+  "features": "+strict-align,+v7",
+  "is-builtin": true,
+  "linker-flavor": "gcc",
+  "linker-is-gnu": true,
+  "llvm-target": "arm-unknown-linux-gnueabi",
+  "max-atomic-width": 64,
+  "os": "none",
+  "panic-strategy": "abort",
+  "position-independent-executables": true,
+  "pre-link-args": {
+    "gcc": [
+      "-Wl,--as-needed",
+      "-Wl,-z,noexecstack"
+    ]
+  },
+  "relocation-model": "static",
+  "relro-level": "full",
+  "target-c-int-width": "32",
+  "target-endian": "little",
+  "target-family": "unix",
+  "target-pointer-width": "32",
+  "vendor": "unknown"
 }
-

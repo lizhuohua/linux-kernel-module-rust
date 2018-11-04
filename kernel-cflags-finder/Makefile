@@ -19,18 +19,25 @@ clean-files := dummy.c
 our_addtree = $(if $(patsubst -I%,%,$(1)), \
 $(if $(filter-out -I/% -I../%,$(1)),$(patsubst ./%,$(CURDIR)/%,$(patsubst -I%,-I$(CURDIR)/%,$(1))),$(1)),$(1))
 our_flags = $(foreach o,$($(1)),$(call our_addtree,$(o)))
+# Clang doesn't support these arguments, just ignoring them seems to be ok
+clang_unsupported = -mapcs -mno-sched-prolog -mno-thumb-interwork
 
 $(M)/dummy.c:
-	@echo "execute here"
-	@echo $(NOSTDINC_FLAGS) $(call our_flags,LINUXINCLUDE) $(__c_flags) $(modkern_cflags)
+	@echo $(NOSTDINC_FLAGS) $(call our_flags,LINUXINCLUDE) $(filter-out $(clang_unsupported),$(__c_flags)) $(modkern_cflags)
 	@touch $@
 
 .PHONY: $(M)/dummy.c
 else
-KDIR ?= /lib/modules/$(shell uname -r)/build
+
+ifeq ($(TARGET),armv7l-linux-kernel-module)
+CMD_LINE = ARCH=arm
+else
+KDIR = /lib/modules/$(shell uname -r)/build
+endif
+
 CLANG ?= clang
 all:
-	$(MAKE) -C $(KDIR) M=$(CURDIR) CC=$(CLANG)
+	$(MAKE) $(CMD_LINE) -C $(KDIR) M=$(CURDIR) CC=$(CLANG)
 clean:
 	$(MAKE) -C $(KDIR) M=$(CURDIR) clean
 endif

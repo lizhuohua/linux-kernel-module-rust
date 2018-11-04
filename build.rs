@@ -11,6 +11,8 @@ const INCLUDED_FUNCTIONS: &[&str] = &["__register_chrdev", "__unregister_chrdev"
 const INCLUDED_VARS: &[&str] = &[];
 
 fn main() {
+    let target = env::var("TARGET").unwrap();
+    println!("Target={}", target);
     let mut builder = bindgen::Builder::default()
         .use_core()
         .ctypes_prefix("c_types")
@@ -18,7 +20,7 @@ fn main() {
         .derive_default(true)
         .rustfmt_bindings(true);
 
-    let output = String::from_utf8(
+    let mut output = String::from_utf8(
         Command::new("make")
             .arg("-C")
             .arg("kernel-cflags-finder")
@@ -28,6 +30,17 @@ fn main() {
             .stdout,
     )
     .unwrap();
+
+    Command::new("make")
+        .arg("-C")
+        .arg("kernel-cflags-finder")
+        .arg("clean");
+
+    println!("get output:{}", output);
+    // These three arguments are not supported by clang
+    output = output.replace("-mapcs", "");
+    output = output.replace("-mno-sched-prolog", "");
+    output = output.replace("-mno-thumb-interwork", "");
 
     for arg in shlex::split(&output).unwrap() {
         builder = builder.clang_arg(arg.to_string());
