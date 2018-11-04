@@ -4,3 +4,10 @@ Cargo.lock
 kernel-cflags-finder/
 !kernel-cflags-finder/Makefile
 .cache.mk
+*.ko
+*.o
+*.order
+*.cmd
+*.mod.c
+Module.symvers
+.tmp_versions/
