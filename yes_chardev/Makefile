@@ -1,8 +1,8 @@
 obj-m := yes_chardev.o
 ifeq ($(TARGET),armv7l-linux-kernel-module)
-yes_chardev-objs := target/$(TARGET)/debug/libyes_chardev.a
+yes_chardev-objs := target/$(TARGET)/debug/libyes_chardev.a ../src/c_wrapper.o
 else
-yes_chardev-objs := target/x86_64-linux-kernel-module/debug/libyes_chardev.a
+yes_chardev-objs := target/x86_64-linux-kernel-module/debug/libyes_chardev.a ../src/c_wrapper.o
 endif
 EXTRA_LDFLAGS += --entry=init_module
 
