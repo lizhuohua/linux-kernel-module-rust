@@ -76,6 +76,7 @@ impl CharDevModule {
                 &*self.fops,
             )
         };
+        println!("My major number: {}", self.major);
         self.major
     }
 }
