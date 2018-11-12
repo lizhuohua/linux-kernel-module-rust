@@ -9,3 +9,10 @@ crate-type = ["staticlib"]
 
 [dependencies]
 linux-device-driver = { path = ".." }
+
+[profile.release]
+panic = "abort"
+lto = true
+
+[profile.dev]
+panic = "abort"

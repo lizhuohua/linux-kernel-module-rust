@@ -50,5 +50,4 @@ pub extern "C" fn cleanup_module() {
 }
 
 #[link_section = ".modinfo"]
-#[allow(non_upper_case_globals)]
 pub static MODINFO: [u8;12] = [108, 105, 099, 101, 110, 115, 101, 061, 071, 080, 076, 0];
