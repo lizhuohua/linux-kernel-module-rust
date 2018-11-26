@@ -103,3 +103,8 @@ $ sudo sh -c "echo 2 > /proc/sys/rust/example/test" # change the value
 $ cat /proc/sys/rust/example/test # now the value is 2
 $ sudo rmmod simple_sysctl
 ```
+There is another way to read/write the sysctl value:
+```bash
+$ sysctl rust.example.test # read
+$ sudo sysctl -w rust.example.test=2 # write
+```
