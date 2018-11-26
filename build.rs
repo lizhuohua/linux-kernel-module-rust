@@ -6,8 +6,15 @@ use std::env;
 use std::path::PathBuf;
 use std::process::Command;
 
-const INCLUDED_TYPES: &[&str] = &["file_operations"];
-const INCLUDED_FUNCTIONS: &[&str] = &["__register_chrdev", "__unregister_chrdev", "_copy_to_user"];
+const INCLUDED_TYPES: &[&str] = &["file_operations", "ctl_table"];
+const INCLUDED_FUNCTIONS: &[&str] = &[
+    "__register_chrdev",
+    "__unregister_chrdev",
+    "_copy_to_user",
+    "register_sysctl",
+    "unregister_sysctl_table",
+    "proc_dointvec_minmax",
+];
 const INCLUDED_VARS: &[&str] = &[];
 
 fn main() {
