@@ -11,6 +11,8 @@ use linux_device_driver::c_types;
 use linux_device_driver::println;
 
 struct Sysctl {
+    // We must store `table` here, otherwise it will be dropped after `register`. It would be a
+    // use-after-free
     table: Box<[bindings::ctl_table]>,
     header: *mut bindings::ctl_table_header,
 }
@@ -56,16 +58,16 @@ impl Sysctl {
         tmp.extra2 = unsafe { &mut TWO as *mut i32 as *mut c_types::c_void };
         let mut table = vec![tmp, unsafe { mem::zeroed() }].into_boxed_slice();
         //println!(
-            //"procname={}, data={}, maxlen={}, mode={}, proc_handler={:?}, extra1={}, extra2={}, addr of table={:?}, addr of table[0]={:?}",
-            //unsafe { *table[0].procname },
-            //unsafe { *(table[0].data as *mut i32) },
-            //table[0].maxlen,
-            //table[0].mode,
-            //table[0].proc_handler.unwrap(),
-            //unsafe { *(table[0].extra1 as *mut i32) },
-            //unsafe { *(table[0].extra2 as *mut i32) },
-            //table.as_ptr(),
-            //&table[0] as *const bindings::ctl_table as *const i32,
+        //"procname={}, data={}, maxlen={}, mode={}, proc_handler={:?}, extra1={}, extra2={}, addr of table={:?}, addr of table[0]={:?}",
+        //unsafe { *table[0].procname },
+        //unsafe { *(table[0].data as *mut i32) },
+        //table[0].maxlen,
+        //table[0].mode,
+        //table[0].proc_handler.unwrap(),
+        //unsafe { *(table[0].extra1 as *mut i32) },
+        //unsafe { *(table[0].extra2 as *mut i32) },
+        //table.as_ptr(),
+        //&table[0] as *const bindings::ctl_table as *const i32,
         //);
         let header =
             unsafe { register_sysctl(path.as_bytes().as_ptr() as *const i8, table.as_mut_ptr()) };
