@@ -93,3 +93,13 @@ $ sudo mknod /dev/yes c 243 0 # make a filesystem node (replace 243 with your ow
 $ sudo cat /dev/yes # read from the device
 $ sudo rmmod yes_chardev
 ```
+
+### simple_sysctl
+A simple sysctl device driver.
+```bash
+$ sudo insmod simple_sysctl.ko
+$ cat /proc/sys/rust/example/test # the default value should be 1
+$ sudo sh -c "echo 2 > /proc/sys/rust/example/test" # change the value
+$ cat /proc/sys/rust/example/test # now the value is 2
+$ sudo rmmod simple_sysctl
+```
