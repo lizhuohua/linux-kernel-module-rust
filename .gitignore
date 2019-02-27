@@ -11,3 +11,5 @@ kernel-cflags-finder/
 *.mod.c
 Module.symvers
 .tmp_versions/
+*.swp
+*.ur-safe
