@@ -15,8 +15,10 @@ struct HelloWorldModule {
 
 impl linux_device_driver::KernelModule for HelloWorldModule {
     fn init() -> linux_device_driver::KernelResult<Self> {
-        let lock_data = sync::Spinlock::new(100);
-        println!("Locked data is {}", *lock_data.lock());
+        let spinlock_data = sync::Spinlock::new(100);
+        println!("Data {} is locked by a spinlock", *spinlock_data.lock());
+        let mutex_data = sync::Mutex::new(50);
+        println!("Data {} is locked by a mutex", *mutex_data.lock());
         println!("Hello from Rust!");
         Ok(HelloWorldModule {
             message: "Hello World!".to_string(),

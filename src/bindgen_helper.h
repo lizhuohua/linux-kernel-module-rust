@@ -3,3 +3,4 @@
 #include <linux/sysctl.h>
 #include <linux/spinlock.h>
 #include <linux/spinlock_types.h>
+#include <linux/mutex.h>

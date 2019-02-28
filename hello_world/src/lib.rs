@@ -50,4 +50,4 @@ pub extern "C" fn cleanup_module() {
 }
 
 #[link_section = ".modinfo"]
-pub static MODINFO: [u8;12] = *b"license=GPL\0";
+pub static MODINFO: [u8; 12] = *b"license=GPL\0";
