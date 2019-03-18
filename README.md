@@ -6,7 +6,7 @@
 
 * `x86_64`
 
-    Rust nightly. Tested on `nightly-2018-11-02-x86_64-unknown-linux-gnu`.
+    Rust nightly. Tested on `nightly-2018-09-30-x86_64-unknown-linux-gnu`.
 
 * `ARMv7` (Raspberry Pi)
 
@@ -108,3 +108,25 @@ There is another way to read/write the sysctl value:
 $ sysctl rust.example.test # read
 $ sudo sysctl -w rust.example.test=2 # write
 ```
+
+## sync_example
+A simple example to illustrate the use of `Spinlock` and `Mutex`.
+```rust
+let mutex_data = sync::Mutex::new(50);
+let mut data = mutex_data.lock();
+println!("Data {} is locked by a mutex", *data);
+*data = 100;
+println!("Now data is {}", *data);
+println!("Hello from Rust!");
+```
+The above code snippet will output like this:
+```bash
+[  424.328154] Mutex is locked!
+[  424.328156] Data 50 is locked by a mutex
+[  424.328158] Now data is 100
+[  424.328158] Hello from Rust!
+[  424.328160] Mutex is dropped!
+```
+
+## smsc95xx
+A real-world device driver for [LAN9512](https://www.microchip.com/datasheet/LAN9512). Still under development.

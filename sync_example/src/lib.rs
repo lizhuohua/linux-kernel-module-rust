@@ -18,7 +18,11 @@ impl linux_device_driver::KernelModule for HelloWorldModule {
         let spinlock_data = sync::Spinlock::new(100);
         println!("Data {} is locked by a spinlock", *spinlock_data.lock());
         let mutex_data = sync::Mutex::new(50);
-        println!("Data {} is locked by a mutex", *mutex_data.lock());
+        let mut data = mutex_data.lock();
+        println!("Data {} is locked by a mutex", *data);
+        *data = 100;
+        println!("Now data is {}", *data);
+        sync::drop(data);
         println!("Hello from Rust!");
         Ok(HelloWorldModule {
             message: "Hello World!".to_string(),

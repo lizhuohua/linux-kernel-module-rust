@@ -20,24 +20,24 @@ our_addtree = $(if $(patsubst -I%,%,$(1)), \
 $(if $(filter-out -I/% -I../%,$(1)),$(patsubst ./%,$(CURDIR)/%,$(patsubst -I%,-I$(CURDIR)/%,$(1))),$(1)),$(1))
 our_flags = $(foreach o,$($(1)),$(call our_addtree,$(o)))
 # Clang doesn't support these arguments, just ignoring them seems to be ok
-clang_unsupported = -mapcs -mno-sched-prolog -mno-thumb-interwork
+# clang_unsupported = -mapcs -mno-sched-prolog -mno-thumb-interwork
+# @echo $(NOSTDINC_FLAGS) $(call our_flags,LINUXINCLUDE) $(filter-out $(clang_unsupported),$(__c_flags)) $(modkern_cflags)
 
 $(M)/dummy.c:
-	@echo $(NOSTDINC_FLAGS) $(call our_flags,LINUXINCLUDE) $(filter-out $(clang_unsupported),$(__c_flags)) $(modkern_cflags)
+	@echo $(NOSTDINC_FLAGS) $(call our_flags,LINUXINCLUDE) $(__c_flags) $(modkern_cflags)
 	@touch $@
 
 .PHONY: $(M)/dummy.c
 else
 
 ifeq ($(TARGET),armv7l-linux-kernel-module)
-CMD_LINE = ARCH=arm
+CMD_LINE = ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf-
 else
 KDIR = /lib/modules/$(shell uname -r)/build
 endif
 
-CLANG ?= clang
 all:
-	$(MAKE) $(CMD_LINE) -C $(KDIR) M=$(CURDIR) CC=$(CLANG)
+	$(MAKE) CC=clang HOSTCC=clang $(CMD_LINE) -C $(KDIR) M=$(CURDIR)
 clean:
 	$(MAKE) -C $(KDIR) M=$(CURDIR) clean
 endif

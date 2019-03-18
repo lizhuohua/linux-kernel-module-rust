@@ -6,7 +6,7 @@ use std::env;
 use std::path::PathBuf;
 use std::process::Command;
 
-const INCLUDED_TYPES: &[&str] = &["file_operations", "ctl_table", "spinlock_t", "mutex"];
+const INCLUDED_TYPES: &[&str] = &["file_operations", "ctl_table", "spinlock_t", "mutex", "usb_driver", "usb_device_id"];
 const INCLUDED_FUNCTIONS: &[&str] = &[
     "__register_chrdev",
     "__unregister_chrdev",
@@ -15,8 +15,12 @@ const INCLUDED_FUNCTIONS: &[&str] = &[
     "unregister_sysctl_table",
     "proc_dointvec_minmax",
     "spin_lock",
+    "usbnet_probe",
+    "usbnet_disconnect",
+    "usb_register_driver",
+    "usb_deregister",
 ];
-const INCLUDED_VARS: &[&str] = &[];
+const INCLUDED_VARS: &[&str] = &["__this_module", "THIS_MODULE"];
 
 fn main() {
     let target = env::var("TARGET").unwrap();
@@ -26,9 +30,10 @@ fn main() {
         .ctypes_prefix("c_types")
         .no_copy(".*")
         .derive_default(true)
-        .rustfmt_bindings(true);
+        .rustfmt_bindings(true)
+        .clang_arg(format!("--target={}", target));
 
-    let mut output = String::from_utf8(
+    let output = String::from_utf8(
         Command::new("make")
             .arg("-C")
             .arg("kernel-cflags-finder")
@@ -46,9 +51,9 @@ fn main() {
 
     println!("get output:{}", output);
     // These three arguments are not supported by clang
-    output = output.replace("-mapcs", "");
-    output = output.replace("-mno-sched-prolog", "");
-    output = output.replace("-mno-thumb-interwork", "");
+    // output = output.replace("-mapcs", "");
+    // output = output.replace("-mno-sched-prolog", "");
+    // output = output.replace("-mno-thumb-interwork", "");
 
     for arg in shlex::split(&output).unwrap() {
         builder = builder.clang_arg(arg.to_string());

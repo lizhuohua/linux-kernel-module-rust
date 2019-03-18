@@ -126,3 +126,5 @@ impl<'a, T: ?Sized> Drop for MutexGuard<'a, T> {
         println!("Mutex is dropped!");
     }
 }
+
+pub fn drop<T>(_x: T) { }

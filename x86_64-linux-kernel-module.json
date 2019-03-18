@@ -28,5 +28,6 @@
   "target-endian": "little",
   "target-family": "unix",
   "target-pointer-width": "64",
-  "vendor": "unknown"
+  "vendor": "unknown",
+  "needs_plt": true
 }
