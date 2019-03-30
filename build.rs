@@ -6,7 +6,7 @@ use std::env;
 use std::path::PathBuf;
 use std::process::Command;
 
-const INCLUDED_TYPES: &[&str] = &["file_operations", "ctl_table", "spinlock_t", "mutex", "usb_driver", "usb_device_id"];
+const INCLUDED_TYPES: &[&str] = &["file_operations", "ctl_table", "spinlock_t", "mutex", "usb_driver", "usb_device_id", "driver_info"];
 const INCLUDED_FUNCTIONS: &[&str] = &[
     "__register_chrdev",
     "__unregister_chrdev",
@@ -19,6 +19,13 @@ const INCLUDED_FUNCTIONS: &[&str] = &[
     "usbnet_disconnect",
     "usb_register_driver",
     "usb_deregister",
+    "usbnet_get_endpoints",
+    "of_get_mac_address",
+    "skb_pull",
+    "skb_push",
+    "skb_trim",
+    "skb_clone",
+    "usbnet_skb_return",
 ];
 const INCLUDED_VARS: &[&str] = &["__this_module", "THIS_MODULE"];
 

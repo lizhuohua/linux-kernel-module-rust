@@ -1,8 +1,14 @@
-obj-m := simple_sysctl.o
-ifeq ($(TARGET),armv7l-linux-kernel-module)
-simple_sysctl-objs := target/$(TARGET)/debug/libsimple_sysctl.a
+obj-m := smsc9512.o
+ifeq ($(RELEASE),1)
+	BUILD = release
 else
-simple_sysctl-objs := target/x86_64-linux-kernel-module/debug/libsimple_sysctl.a
+	BUILD = debug
+endif
+
+ifeq ($(TARGET),armv7l-linux-kernel-module)
+smsc9512-objs := target/$(TARGET)/$(BUILD)/libsmsc9512.a ../src/c_wrapper.o
+else
+smsc9512-objs := target/x86_64-linux-kernel-module/$(BUILD)/libsmsc9512.a ../src/c_wrapper.o
 endif
 EXTRA_LDFLAGS += --entry=init_module
 
