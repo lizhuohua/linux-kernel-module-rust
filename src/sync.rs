@@ -1,7 +1,7 @@
 use core::cell::UnsafeCell;
 use core::ops::{Deref, DerefMut, Drop};
-use linux_device_driver::bindings;
-use linux_device_driver::println;
+use crate::bindings;
+use crate::println;
 
 extern "C" {
     pub fn spin_lock_init_wrapper(lock: *mut bindings::spinlock_t);

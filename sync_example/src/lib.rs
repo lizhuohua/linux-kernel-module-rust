@@ -2,12 +2,13 @@
 #![feature(alloc)]
 #![feature(const_fn)]
 
-pub mod sync;
+// pub mod sync;
 
 extern crate alloc;
 use crate::alloc::string::{String, ToString};
 use linux_device_driver::c_types;
 use linux_device_driver::println;
+use linux_device_driver::sync;
 
 struct HelloWorldModule {
     message: String,
