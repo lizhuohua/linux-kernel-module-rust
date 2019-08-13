@@ -14,6 +14,7 @@ cc = "1.0.25"
 shlex = "0.1.1"
 
 [profile.release]
+lto = true
 panic="abort"
 
 [profile.dev]

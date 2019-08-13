@@ -1,8 +1,14 @@
 obj-m := simple_sysctl.o
-ifeq ($(TARGET),armv7l-linux-kernel-module)
-simple_sysctl-objs := target/$(TARGET)/debug/libsimple_sysctl.a
+ifeq ($(RELEASE),1)
+	BUILD = release
 else
-simple_sysctl-objs := target/x86_64-linux-kernel-module/debug/libsimple_sysctl.a
+	BUILD = debug
+endif
+
+ifeq ($(TARGET),armv7l-linux-kernel-module)
+simple_sysctl-objs := target/$(TARGET)/$(BUILD)/libsimple_sysctl.a
+else
+simple_sysctl-objs := target/x86_64-linux-kernel-module/$(BUILD)/libsimple_sysctl.a
 endif
 EXTRA_LDFLAGS += --entry=init_module
 

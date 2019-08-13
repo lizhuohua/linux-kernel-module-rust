@@ -1,8 +1,14 @@
 obj-m := helloworld.o
-ifeq ($(TARGET),armv7l-linux-kernel-module)
-helloworld-objs := target/$(TARGET)/debug/libhello_world.a
+ifeq ($(RELEASE),1)
+	BUILD = release
 else
-helloworld-objs := target/x86_64-linux-kernel-module/debug/libhello_world.a
+	BUILD = debug
+endif
+
+ifeq ($(TARGET),armv7l-linux-kernel-module)
+helloworld-objs := target/$(TARGET)/$(BUILD)/libhello_world.a
+else
+helloworld-objs := target/x86_64-linux-kernel-module/$(BUILD)/libhello_world.a
 endif
 EXTRA_LDFLAGS += --entry=init_module
 
