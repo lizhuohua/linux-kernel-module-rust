@@ -9,7 +9,7 @@ pub mod kernel_result;
 pub mod printk;
 pub mod bindings;
 pub mod sync;
-// pub mod panic;
+pub mod panic;
 
 pub use self::kernel_module::KernelModule;
 pub use self::kernel_result::KernelResult;
