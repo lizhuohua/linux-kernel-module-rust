@@ -1,21 +1,34 @@
 #![no_std]
 #![feature(alloc)]
 #![feature(const_fn)]
+#![feature(min_const_fn)]
 
 // pub mod sync;
 
 extern crate alloc;
 use crate::alloc::string::{String, ToString};
+use lazy_static::*;
 use linux_device_driver::c_types;
 use linux_device_driver::println;
 use linux_device_driver::sync;
+use linux_device_driver::sync::Spinlock;
 
 struct HelloWorldModule {
     message: String,
 }
 
+lazy_static! {
+    static ref GLOBAL: Spinlock<i32> = Spinlock::new(0);
+}
+
+fn global_synchronization_example() {
+    let mut global = GLOBAL.lock();
+    *global = 1;
+}
+
 impl linux_device_driver::KernelModule for HelloWorldModule {
     fn init() -> linux_device_driver::KernelResult<Self> {
+        global_synchronization_example();
         let spinlock_data = sync::Spinlock::new(100);
         println!("Data {} is locked by a spinlock", *spinlock_data.lock());
         let mutex_data = sync::Mutex::new(50);

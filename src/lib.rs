@@ -9,20 +9,14 @@ pub mod kernel_result;
 pub mod printk;
 pub mod bindings;
 pub mod sync;
+pub mod panic;
 
 pub use self::kernel_module::KernelModule;
 pub use self::kernel_result::KernelResult;
-pub use self::printk::*;
+pub use self::kernel_result::KernelError;
 
 #[global_allocator]
 static ALLOCATOR: allocator::KernelAllocator = allocator::KernelAllocator;
-
-use core::panic::PanicInfo;
-
-#[panic_handler]
-fn panic(_info: &PanicInfo) -> ! {
-    loop {}
-}
 
 #[lang = "eh_personality"]
 extern "C" fn eh_personality() {}

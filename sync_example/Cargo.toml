@@ -9,6 +9,9 @@ crate-type = ["staticlib"]
 
 [dependencies]
 linux-device-driver = { path = ".." }
+# interrupt = { path = "../interrupt" }
+# callback_function = { path = "../callback_function" }
+lazy_static = { version = "0.2.11", features = ["spin_no_std"] }
 
 [profile.release]
 panic = "abort"

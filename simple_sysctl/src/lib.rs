@@ -123,5 +123,6 @@ pub extern "C" fn cleanup_module() {
     }
 }
 
+#[no_mangle]
 #[link_section = ".modinfo"]
 pub static MODINFO: [u8; 12] = *b"license=GPL\0";

@@ -26,6 +26,11 @@ const INCLUDED_FUNCTIONS: &[&str] = &[
     "skb_trim",
     "skb_clone",
     "usbnet_skb_return",
+    "usbnet_read_cmd",
+    "call_usermodehelper",
+    "schedule",
+    //"__purge_module",
+    //"__rust_delete_module",
 ];
 const INCLUDED_VARS: &[&str] = &["__this_module", "THIS_MODULE"];
 
