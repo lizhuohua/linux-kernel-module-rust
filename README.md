@@ -1,5 +1,5 @@
 # Writing Linux Device Drivers in Rust
-[![Build Status](https://travis-ci.com/lizhuohua/linux-device-driver-rust.svg?token=gQ3MGp1DXsVespCpQBDg&branch=master)](https://travis-ci.com/lizhuohua/linux-device-driver-rust)
+[![Build Status](https://travis-ci.com/lizhuohua/linux-kernel-module-rust.svg?token=gQ3MGp1DXsVespCpQBDg&branch=master)](https://travis-ci.com/lizhuohua/linux-kernel-module-rust)
 ## Requirements
 
 ### Toolchain
@@ -129,4 +129,4 @@ The above code snippet will output like this:
 ```
 
 ## smsc95xx
-A real-world device driver for [LAN9512](https://www.microchip.com/datasheet/LAN9512). Still under development.
+A highly simplified real-world device driver for [LAN9512](https://www.microchip.com/datasheet/LAN9512) USB to Ethernet controller, which is used on Raspberry Pi 3. The implementation resembles the [C version](https://github.com/torvalds/linux/blob/master/drivers/net/usb/smsc95xx.c).
