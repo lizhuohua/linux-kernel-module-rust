@@ -158,3 +158,14 @@ The above code snippet will output like this:
 
 ## smsc95xx
 A highly simplified real-world device driver for [LAN9512](https://www.microchip.com/datasheet/LAN9512) USB to Ethernet controller, which is used on Raspberry Pi 3. The implementation resembles the [C version](https://github.com/torvalds/linux/blob/master/drivers/net/usb/smsc95xx.c).
+
+## Acknowledgment
+
+Thanks to these previous works on writing Linux kernel driver in Rust. Their attempts inspire us a lot.
+  - `fishinabarrel/linux-kernel-module-rust`: https://github.com/fishinabarrel/linux-kernel-module-rust
+  - `tsgates/rust.ko`: https://github.com/tsgates/rust.ko
+  - `kernel-roulette`: https://github.com/souvik1997/kernel-roulette
+
+## License
+
+GPL-2.0
