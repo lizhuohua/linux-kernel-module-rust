@@ -137,7 +137,7 @@ $ sysctl rust.example.test # read
 $ sudo sysctl -w rust.example.test=2 # write
 ```
 
-## sync_example
+### sync_example
 A simple example to illustrate the use of `Spinlock` and `Mutex`.
 ```rust
 let mutex_data = sync::Mutex::new(50);
@@ -156,8 +156,21 @@ The above code snippet will output like this:
 [  424.328160] Mutex is dropped!
 ```
 
-## smsc95xx
+### smsc95xx
 A highly simplified real-world device driver for [LAN9512](https://www.microchip.com/datasheet/LAN9512) USB to Ethernet controller, which is used on Raspberry Pi 3. The implementation resembles the [C version](https://github.com/torvalds/linux/blob/master/drivers/net/usb/smsc95xx.c).
+
+## Roadmap
+The efforts of writing kernel modules in Rust can be traced back to 2013 (the first commit of [rust.ko](https://github.com/tsgates/rust.ko)), long before Rust's first stable version was released. Here we list some of the objectives that people have already achieved and what we plan to achieve in the future.
+- [x] Generate OS-independent machine code by using JSON specification files
+- [x] Recompile pre-compiled libraries (core, compiler_builtins, alloc) by using [cargo-xbuild](https://github.com/rust-osdev/cargo-xbuild)
+- [x] Generate Rust bindings for kernel headers to reuse existing data structures and functions defined inside the kernel by using [bindgen](https://github.com/rust-lang/rust-bindgen).
+- [x] Kernel allocator by using the [GlobalAlloc](https://doc.rust-lang.org/core/alloc/trait.GlobalAlloc.html) trait.
+- [x] Kernel synchronizations by reimplementing the synchronization primitives.
+- [x] A simple real-world device driver for LAN9512.
+- [ ] Minimize the use of unsafe Rust.
+- [ ] Find a idiomatic way to define callback functions.
+- [ ] Failure recovery.
+- [ ] Use static analysis tool to reason about unsafe Rust code.
 
 ## Acknowledgment
 
