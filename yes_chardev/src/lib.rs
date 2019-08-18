@@ -4,9 +4,9 @@
 extern crate alloc;
 
 use crate::alloc::boxed::Box;
-use linux_device_driver::bindings;
-use linux_device_driver::c_types;
-use linux_device_driver::println;
+use linux_kernel_module::bindings;
+use linux_kernel_module::c_types;
+use linux_kernel_module::println;
 
 struct CharDevModule {
     major: c_types::c_int,
@@ -58,7 +58,7 @@ extern "C" fn my_read(
 }
 
 trait CharDevice: Sized {
-    fn init(name: &'static str) -> linux_device_driver::KernelResult<Self>;
+    fn init(name: &'static str) -> linux_kernel_module::KernelResult<Self>;
 }
 
 impl CharDevModule {
@@ -82,7 +82,7 @@ impl CharDevModule {
 }
 
 impl CharDevice for CharDevModule {
-    fn init(name: &'static str) -> linux_device_driver::KernelResult<Self> {
+    fn init(name: &'static str) -> linux_kernel_module::KernelResult<Self> {
         println!("Hello CharDev from Rust!");
         let fops = bindings::file_operations::default();
         Ok(CharDevModule {
@@ -133,5 +133,4 @@ pub extern "C" fn cleanup_module() {
 }
 
 #[link_section = ".modinfo"]
-pub static MODINFO: [u8;12] = *b"license=GPL\0";
-
+pub static MODINFO: [u8; 12] = *b"license=GPL\0";

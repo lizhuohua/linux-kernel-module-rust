@@ -3,12 +3,12 @@
 
 extern crate alloc;
 
-use core::mem;
 use crate::alloc::boxed::Box;
 use crate::alloc::vec; // import vec! macro
-use linux_device_driver::bindings;
-use linux_device_driver::c_types;
-use linux_device_driver::println;
+use core::mem;
+use linux_kernel_module::bindings;
+use linux_kernel_module::c_types;
+use linux_kernel_module::println;
 use rlibc;
 
 const ETH_FRAME_LEN: u32 = 1514;
@@ -169,7 +169,7 @@ unsafe extern "C" fn smsc9512_tx_fixup(
 }
 
 impl USBDriver {
-    fn register(name: &'static str) -> linux_device_driver::KernelResult<Self> {
+    fn register(name: &'static str) -> linux_kernel_module::KernelResult<Self> {
         // Construct driver_info structure
         println!("before constrcuting driver_info");
         let mut smsc9512_info = Box::new(bindings::driver_info::default());
@@ -224,8 +224,8 @@ struct USBModule {
     usb: USBDriver,
 }
 
-impl linux_device_driver::KernelModule for USBModule {
-    fn init() -> linux_device_driver::KernelResult<Self> {
+impl linux_kernel_module::KernelModule for USBModule {
+    fn init() -> linux_kernel_module::KernelResult<Self> {
         println!("Hello from Rust!");
         let usb = USBDriver::register("smsc9512\0")?;
         Ok(USBModule { usb: usb })
@@ -245,7 +245,7 @@ static mut MODULE: Option<USBModule> = None;
 
 #[no_mangle]
 pub extern "C" fn init_module() -> c_types::c_int {
-    match <USBModule as linux_device_driver::KernelModule>::init() {
+    match <USBModule as linux_kernel_module::KernelModule>::init() {
         Ok(m) => {
             unsafe {
                 MODULE = Some(m);

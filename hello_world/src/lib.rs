@@ -3,15 +3,15 @@
 
 extern crate alloc;
 use crate::alloc::string::{String, ToString};
-use linux_device_driver::c_types;
-use linux_device_driver::println;
+use linux_kernel_module::c_types;
+use linux_kernel_module::println;
 
 struct HelloWorldModule {
     message: String,
 }
 
-impl linux_device_driver::KernelModule for HelloWorldModule {
-    fn init() -> linux_device_driver::KernelResult<Self> {
+impl linux_kernel_module::KernelModule for HelloWorldModule {
+    fn init() -> linux_kernel_module::KernelResult<Self> {
         println!("Hello from Rust!");
         Ok(HelloWorldModule {
             message: "Hello World!".to_string(),
@@ -29,7 +29,7 @@ static mut MODULE: Option<HelloWorldModule> = None;
 
 #[no_mangle]
 pub extern "C" fn init_module() -> c_types::c_int {
-    match <HelloWorldModule as linux_device_driver::KernelModule>::init() {
+    match <HelloWorldModule as linux_kernel_module::KernelModule>::init() {
         Ok(m) => {
             unsafe {
                 MODULE = Some(m);

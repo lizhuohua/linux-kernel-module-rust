@@ -8,10 +8,10 @@
 extern crate alloc;
 use crate::alloc::string::{String, ToString};
 use lazy_static::*;
-use linux_device_driver::c_types;
-use linux_device_driver::println;
-use linux_device_driver::sync;
-use linux_device_driver::sync::Spinlock;
+use linux_kernel_module::c_types;
+use linux_kernel_module::println;
+use linux_kernel_module::sync;
+use linux_kernel_module::sync::Spinlock;
 
 struct HelloWorldModule {
     message: String,
@@ -26,8 +26,8 @@ fn global_synchronization_example() {
     *global = 1;
 }
 
-impl linux_device_driver::KernelModule for HelloWorldModule {
-    fn init() -> linux_device_driver::KernelResult<Self> {
+impl linux_kernel_module::KernelModule for HelloWorldModule {
+    fn init() -> linux_kernel_module::KernelResult<Self> {
         global_synchronization_example();
         let spinlock_data = sync::Spinlock::new(100);
         println!("Data {} is locked by a spinlock", *spinlock_data.lock());
@@ -55,7 +55,7 @@ static mut MODULE: Option<HelloWorldModule> = None;
 
 #[no_mangle]
 pub extern "C" fn init_module() -> c_types::c_int {
-    match <HelloWorldModule as linux_device_driver::KernelModule>::init() {
+    match <HelloWorldModule as linux_kernel_module::KernelModule>::init() {
         Ok(m) => {
             unsafe {
                 MODULE = Some(m);

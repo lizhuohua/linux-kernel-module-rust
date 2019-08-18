@@ -6,9 +6,9 @@ extern crate alloc;
 use crate::alloc::boxed::Box;
 use crate::alloc::vec; // import vec! macro
 use core::mem;
-use linux_device_driver::bindings;
-use linux_device_driver::c_types;
-use linux_device_driver::println;
+use linux_kernel_module::bindings;
+use linux_kernel_module::c_types;
+use linux_kernel_module::println;
 
 struct Sysctl {
     // We must store `table` here, otherwise it will be dropped after `register`. It would be a
@@ -47,7 +47,7 @@ static mut ZERO: i32 = 0;
 static mut TWO: i32 = 2;
 
 impl Sysctl {
-    fn register(path: &'static str, name: &'static str) -> linux_device_driver::KernelResult<Self> {
+    fn register(path: &'static str, name: &'static str) -> linux_kernel_module::KernelResult<Self> {
         let mut tmp = bindings::ctl_table::default();
         tmp.procname = name.as_bytes().as_ptr() as *const i8;
         tmp.maxlen = mem::size_of::<i32>() as i32;
@@ -81,8 +81,8 @@ impl Sysctl {
     }
 }
 
-impl linux_device_driver::KernelModule for SysctlModule {
-    fn init() -> linux_device_driver::KernelResult<Self> {
+impl linux_kernel_module::KernelModule for SysctlModule {
+    fn init() -> linux_kernel_module::KernelResult<Self> {
         println!("Hello from Rust!");
         let sysctl = Sysctl::register("rust/example\0", "test\0")?;
         Ok(SysctlModule { sysctl: sysctl })
@@ -103,7 +103,7 @@ static mut MODULE: Option<SysctlModule> = None;
 
 #[no_mangle]
 pub extern "C" fn init_module() -> c_types::c_int {
-    match <SysctlModule as linux_device_driver::KernelModule>::init() {
+    match <SysctlModule as linux_kernel_module::KernelModule>::init() {
         Ok(m) => {
             unsafe {
                 MODULE = Some(m);
