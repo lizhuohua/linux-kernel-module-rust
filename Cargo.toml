@@ -1,5 +1,5 @@
 [package]
-name = "linux-device-driver"
+name = "linux-kernel-module"
 version = "0.1.0"
 authors = ["Li Zhuohua <lizhuohua1994@gmail.com>"]
 edition = "2018"
