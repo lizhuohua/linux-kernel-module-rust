@@ -8,10 +8,6 @@ pub struct KernelAllocator;
 
 unsafe impl GlobalAlloc for KernelAllocator {
     unsafe fn alloc(&self, layout: Layout) -> *mut u8 {
-        println!(
-            "Rust is allocating kernel memeory, size = {}",
-            layout.size()
-        );
         return kernel::krealloc(
             0 as *const c_types::c_void,
             layout.size(),
@@ -20,7 +16,6 @@ unsafe impl GlobalAlloc for KernelAllocator {
     }
 
     unsafe fn dealloc(&self, ptr: *mut u8, _layout: Layout) {
-        println!("Rust is releasing kernel memeory, size = {}", _layout.size());
         kernel::kfree(ptr as *const c_types::c_void);
     }
 }
