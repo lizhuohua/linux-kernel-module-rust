@@ -8,7 +8,7 @@ usually ship their proprietary device drivers with their embedded devices.
 These out-of-tree device drivers are generally of poor quality because of a
 lack of code audit.
 
-We propose a approach that helps third-party developers to improve the
+We propose an approach that helps third-party developers to improve the
 reliability and safety of device drivers without modifying the kernel:
 Rewriting device drivers in a memory-safe programming language called Rust.
 Rust's rigorous language model assists the device driver developers to detect
