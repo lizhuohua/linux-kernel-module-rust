@@ -103,6 +103,7 @@ $ cd hello_world
         ```
 
 ## Load and Test
+Examples are tested on Ubuntu 18.04 (Linux kernel 4.15.0-46-generic), `smsc95xx` is tested on Raspberry Pi 3 (Linux kernel 4.19.29).
 
 ### hello_world
 The simplest kernel module. It just prints "hello" and "goodbye".
